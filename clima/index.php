@@ -8,52 +8,80 @@
 </head>
 <body>
 
+    <div class="filter-backdrop" id="filter-backdrop"></div>
+
     <div class="app-shell">
-        <aside class="location-panel" aria-label="Filtros de local">
+        <aside class="location-panel" id="location-panel" aria-label="Filtros de local" aria-hidden="true" inert>
             <div class="panel-header">
-                <span class="filter-badge">Precisão</span>
-                <h2>Filtros de local</h2>
+                <div class="panel-title">
+                    <span class="filter-badge">Precisão</span>
+                    <h2>Filtros de local</h2>
+                </div>
+                <button type="button" class="panel-close-btn" id="close-filters-btn" aria-label="Fechar filtros">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M6 6l12 12M18 6L6 18"></path>
+                    </svg>
+                </button>
             </div>
 
             <div class="selection-summary" id="selection-summary">Nenhum local selecionado</div>
             <div class="location-status" id="location-status">Carregando opções...</div>
 
             <div class="filters-scroll" aria-label="Opções de filtragem">
-            <div class="picker-section">
-                <div class="picker-heading">
-                    <span>Continente</span>
-                    <strong id="continent-count">0</strong>
-                </div>
-                <div class="option-list continent-list" id="continent-list"></div>
-            </div>
+                <details class="picker-section" id="picker-continent" name="filter-step" open>
+                    <summary class="picker-heading">
+                        <div class="picker-heading-left">
+                            <span class="step-badge">1</span>
+                            <span>Continente</span>
+                        </div>
+                        <strong id="continent-count">0</strong>
+                    </summary>
+                    <div class="picker-content">
+                        <div class="option-list continent-list" id="continent-list"></div>
+                    </div>
+                </details>
 
-            <div class="picker-section">
-                <div class="picker-heading">
-                    <span>País</span>
-                    <strong id="country-count">0</strong>
-                </div>
-                <input type="search" class="list-search" id="country-list-search" placeholder="Filtrar países" autocomplete="off">
-                <div class="option-list" id="country-list"></div>
-            </div>
+                <details class="picker-section" id="picker-country" name="filter-step">
+                    <summary class="picker-heading">
+                        <div class="picker-heading-left">
+                            <span class="step-badge">2</span>
+                            <span>País</span>
+                        </div>
+                        <strong id="country-count">0</strong>
+                    </summary>
+                    <div class="picker-content">
+                        <input type="search" class="list-search" id="country-list-search" placeholder="Filtrar países" autocomplete="off">
+                        <div class="option-list" id="country-list"></div>
+                    </div>
+                </details>
 
-            <div class="picker-section">
-                <div class="picker-heading">
-                    <span>Estado ou província</span>
-                    <strong id="state-count">0</strong>
-                </div>
-                <input type="search" class="list-search" id="state-list-search" placeholder="Filtrar estados" autocomplete="off">
-                <div class="option-list" id="state-list"></div>
-            </div>
+                <details class="picker-section" id="picker-state" name="filter-step">
+                    <summary class="picker-heading">
+                        <div class="picker-heading-left">
+                            <span class="step-badge">3</span>
+                            <span>Estado / Província</span>
+                        </div>
+                        <strong id="state-count">0</strong>
+                    </summary>
+                    <div class="picker-content">
+                        <input type="search" class="list-search" id="state-list-search" placeholder="Filtrar estados" autocomplete="off">
+                        <div class="option-list" id="state-list"></div>
+                    </div>
+                </details>
 
-            <div class="picker-section">
-                <div class="picker-heading">
-                    <span>Cidade ou município</span>
-                    <strong id="city-count">0</strong>
-                </div>
-                <input type="search" class="list-search" id="city-list-search" placeholder="Filtrar cidades" autocomplete="off">
-                <div class="option-list" id="city-list"></div>
-            </div>
-
+                <details class="picker-section" id="picker-city" name="filter-step">
+                    <summary class="picker-heading">
+                        <div class="picker-heading-left">
+                            <span class="step-badge">4</span>
+                            <span>Cidade / Município</span>
+                        </div>
+                        <strong id="city-count">0</strong>
+                    </summary>
+                    <div class="picker-content">
+                        <input type="search" class="list-search" id="city-list-search" placeholder="Filtrar cidades" autocomplete="off">
+                        <div class="option-list" id="city-list"></div>
+                    </div>
+                </details>
             </div>
 
             <button type="button" class="panel-search-btn" id="panel-search-btn" disabled>Buscar local selecionado</button>
@@ -62,9 +90,23 @@
         <div class="weather-card">
             <h1>Previsão do Tempo</h1>
             
-            <div class="search-box">
-                <input type="text" id="city-input" placeholder="Cidade ou município..." autocomplete="off">
-                <button id="search-btn">🔍</button>
+            <div class="search-tools">
+                <div class="search-box">
+                    <input type="text" id="city-input" placeholder="Cidade ou município..." autocomplete="off">
+                    <button id="search-btn" aria-label="Buscar cidade">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <circle cx="11" cy="11" r="7"></circle>
+                            <path d="M16.5 16.5L21 21"></path>
+                        </svg>
+                    </button>
+                </div>
+                <button type="button" class="advanced-filter-btn" id="open-filters-btn" aria-controls="location-panel" aria-expanded="false" aria-label="Filtros avançados">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M4 7h10M18 7h2M4 17h2M10 17h10"></path>
+                        <circle cx="16" cy="7" r="2"></circle>
+                        <circle cx="8" cy="17" r="2"></circle>
+                    </svg>
+                </button>
             </div>
 
             <div id="loading">Buscando dados na atmosfera...</div>
@@ -76,7 +118,7 @@
                     <div class="coord-text" id="coordinates">Lat: -- | Lon: --</div>
                     
                     <div class="temp">
-                        <img id="weather-icon" src="" alt="Ícone do clima" style="display:none;">
+                        <div class="weather-visual" id="weather-visual" role="img" aria-label="Ilustração do clima atual"></div>
                         <span id="temperature">--°C</span>
                     </div>
                     
@@ -86,8 +128,8 @@
                 
                 <div class="weather-grid">
                     <div class="grid-item">
-                        <span>Min / Máx</span>
-                        <strong><span id="temp-min">--</span>°C / <span id="temp-max">--</span>°C</strong>
+                        <span id="temp-range-label">Min / Máx</span>
+                        <strong id="temp-range">--°C</strong>
                     </div>
                     <div class="grid-item">
                         <span>Umidade</span>
@@ -123,6 +165,10 @@
             const errorDiv = document.getElementById('error-message');
             const resultDiv = document.getElementById('weather-result');
             const weatherCard = document.querySelector('.weather-card');
+            const openFiltersBtn = document.getElementById('open-filters-btn');
+            const closeFiltersBtn = document.getElementById('close-filters-btn');
+            const filterBackdrop = document.getElementById('filter-backdrop');
+            const locationPanelEl = document.getElementById('location-panel');
             const locationStatus = document.getElementById('location-status');
             const selectionSummary = document.getElementById('selection-summary');
             const continentList = document.getElementById('continent-list');
@@ -185,11 +231,11 @@
                 cityName: document.getElementById('city-name'),
                 coordinates: document.getElementById('coordinates'),
                 temperature: document.getElementById('temperature'),
-                icon: document.getElementById('weather-icon'),
+                visual: document.getElementById('weather-visual'),
                 description: document.getElementById('description'),
                 feelsLike: document.getElementById('feels-like'),
-                tempMin: document.getElementById('temp-min'),
-                tempMax: document.getElementById('temp-max'),
+                tempRangeLabel: document.getElementById('temp-range-label'),
+                tempRange: document.getElementById('temp-range'),
                 humidity: document.getElementById('humidity'),
                 windSpeed: document.getElementById('wind-speed'),
                 pressure: document.getElementById('pressure'),
@@ -198,8 +244,20 @@
                 sunset: document.getElementById('sunset')
             };
 
+            openFiltersBtn.addEventListener('click', openFilters);
+            closeFiltersBtn.addEventListener('click', closeFilters);
+            filterBackdrop.addEventListener('click', closeFilters);
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && document.body.classList.contains('filters-open')) {
+                    closeFilters();
+                }
+            });
+
             searchBtn.addEventListener('click', fetchWeather);
-            panelSearchBtn.addEventListener('click', fetchWeather);
+            panelSearchBtn.addEventListener('click', () => {
+                fetchWeather();
+                closeFilters({ restoreFocus: false });
+            });
             cityInput.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') fetchWeather();
             });
@@ -212,6 +270,27 @@
             [countrySearch, stateSearch, citySearch].forEach((input) => {
                 input.addEventListener('input', renderLocationUi);
             });
+
+            function openFilters() {
+                document.body.classList.add('filters-open');
+                locationPanelEl.setAttribute('aria-hidden', 'false');
+                locationPanelEl.removeAttribute('inert');
+                openFiltersBtn.setAttribute('aria-expanded', 'true');
+                closeFiltersBtn.focus({ preventScroll: true });
+            }
+
+            function closeFilters(options = {}) {
+                const { restoreFocus = true } = options;
+
+                document.body.classList.remove('filters-open');
+                locationPanelEl.setAttribute('aria-hidden', 'true');
+                locationPanelEl.setAttribute('inert', '');
+                openFiltersBtn.setAttribute('aria-expanded', 'false');
+
+                if (restoreFocus) {
+                    openFiltersBtn.focus({ preventScroll: true });
+                }
+            }
 
             function formatTime(unixTimestamp) {
                 const date = new Date(unixTimestamp * 1000);
@@ -255,6 +334,98 @@
 
                 document.body.classList.add(theme.body);
                 weatherCard.classList.add(theme.card);
+            }
+
+            function isNightWeather(data) {
+                return data.weather[0].icon?.includes('n') || data.dt < data.sys.sunrise || data.dt > data.sys.sunset;
+            }
+
+            function renderWeatherVisual(weather, isNight) {
+                const id = weather.id || 800;
+                const main = String(weather.main || '').toLowerCase();
+                let markup;
+
+                if (id >= 200 && id < 300) {
+                    markup = `
+                        <svg class="weather-svg" viewBox="0 0 128 128" aria-hidden="true">
+                            <g class="weather-cloud storm-cloud">
+                                <path d="M37 88h55a22 22 0 0 0 2-44 31 31 0 0 0-58-8 25 25 0 0 0 1 52z"></path>
+                            </g>
+                            <path class="lightning" d="M66 67 50 96h17l-7 24 23-35H66z"></path>
+                            <g class="rain-lines">
+                                <path d="M37 92l-6 14"></path>
+                                <path d="M93 92l-6 14"></path>
+                            </g>
+                        </svg>`;
+                } else if ((id >= 300 && id < 400) || (id >= 500 && id < 600)) {
+                    markup = `
+                        <svg class="weather-svg" viewBox="0 0 128 128" aria-hidden="true">
+                            <g class="weather-cloud">
+                                <path d="M35 81h58a21 21 0 0 0 1-42 30 30 0 0 0-58-7 25 25 0 0 0-1 49z"></path>
+                            </g>
+                            <g class="rain-lines">
+                                <path class="rain-drop rain-drop-one" d="M41 88l-7 18"></path>
+                                <path class="rain-drop rain-drop-two" d="M64 88l-7 18"></path>
+                                <path class="rain-drop rain-drop-three" d="M87 88l-7 18"></path>
+                            </g>
+                        </svg>`;
+                } else if (id >= 600 && id < 700) {
+                    markup = `
+                        <svg class="weather-svg" viewBox="0 0 128 128" aria-hidden="true">
+                            <g class="weather-cloud snow-cloud">
+                                <path d="M35 80h58a21 21 0 0 0 1-42 30 30 0 0 0-58-7 25 25 0 0 0-1 49z"></path>
+                            </g>
+                            <g class="snowflakes">
+                                <circle class="snowflake snowflake-one" cx="42" cy="98" r="4"></circle>
+                                <circle class="snowflake snowflake-two" cx="64" cy="104" r="4"></circle>
+                                <circle class="snowflake snowflake-three" cx="86" cy="98" r="4"></circle>
+                            </g>
+                        </svg>`;
+                } else if (id >= 700 && id < 800) {
+                    markup = `
+                        <svg class="weather-svg" viewBox="0 0 128 128" aria-hidden="true">
+                            <g class="mist-lines">
+                                <path class="mist-line" d="M24 46h62c12 0 12 16 0 16H72"></path>
+                                <path class="mist-line mist-line-two" d="M34 72h70c11 0 11 16 0 16H92"></path>
+                                <path class="mist-line mist-line-three" d="M22 98h58"></path>
+                            </g>
+                        </svg>`;
+                } else if (main === 'clouds') {
+                    markup = `
+                        <svg class="weather-svg" viewBox="0 0 128 128" aria-hidden="true">
+                            ${isNight ? '<path class="moon" d="M82 21a34 34 0 1 0 25 57 31 31 0 0 1-25-57z"></path>' : '<circle class="sun-core small-sun" cx="42" cy="42" r="18"></circle>'}
+                            <g class="weather-cloud">
+                                <path d="M35 83h60a22 22 0 0 0 2-44 31 31 0 0 0-59-8 26 26 0 0 0-3 52z"></path>
+                            </g>
+                        </svg>`;
+                } else if (isNight) {
+                    markup = `
+                        <svg class="weather-svg" viewBox="0 0 128 128" aria-hidden="true">
+                            <path class="moon" d="M79 21a39 39 0 1 0 28 66 36 36 0 0 1-28-66z"></path>
+                            <circle class="star star-one" cx="32" cy="35" r="3"></circle>
+                            <circle class="star star-two" cx="96" cy="30" r="2"></circle>
+                            <circle class="star star-three" cx="102" cy="82" r="3"></circle>
+                        </svg>`;
+                } else {
+                    markup = `
+                        <svg class="weather-svg" viewBox="0 0 128 128" aria-hidden="true">
+                            <g class="sun-rays">
+                                <path d="M64 10v14"></path>
+                                <path d="M64 104v14"></path>
+                                <path d="M10 64h14"></path>
+                                <path d="M104 64h14"></path>
+                                <path d="M26 26l10 10"></path>
+                                <path d="M92 92l10 10"></path>
+                                <path d="M102 26 92 36"></path>
+                                <path d="M36 92l-10 10"></path>
+                            </g>
+                            <circle class="sun-core" cx="64" cy="64" r="28"></circle>
+                            <circle class="sun-glow" cx="54" cy="54" r="8"></circle>
+                        </svg>`;
+                }
+
+                els.visual.innerHTML = markup;
+                els.visual.setAttribute('aria-label', `Ilustração de ${weather.description || 'clima atual'}`);
             }
 
             function normalizeText(text) {
@@ -373,12 +544,6 @@
                     cityInput.value = '';
                 }
 
-                if (level === 'state') {
-                    locality.selected.city = '';
-                    locality.cities = [];
-                    citySearch.value = '';
-                    cityInput.value = '';
-                }
             }
 
             function selectContinent(continent) {
@@ -386,6 +551,7 @@
                 resetAfter('continent');
                 setStatus('Países atualizados pelo continente.', 'ok');
                 renderLocationUi();
+                document.getElementById('picker-country').open = true;
             }
 
             function selectCountry(country) {
@@ -395,8 +561,10 @@
 
                 if ((country.estados || []).length === 0) {
                     loadCitiesForSelection();
+                    document.getElementById('picker-city').open = true;
                 } else {
                     setStatus('Estados e províncias atualizados pelo país.', 'ok');
+                    document.getElementById('picker-state').open = true;
                 }
 
                 renderLocationUi();
@@ -407,6 +575,7 @@
                 resetAfter('state');
                 renderLocationUi();
                 loadCitiesForSelection();
+                document.getElementById('picker-city').open = true;
             }
 
             function selectCity(city) {
@@ -414,6 +583,7 @@
                 cityInput.value = city;
                 renderLocationUi();
                 fetchWeather();
+                closeFilters({ restoreFocus: false });
             }
 
             function updateSelectionSummary() {
@@ -597,15 +767,18 @@
                         throw new Error(data.erro || 'Erro ao buscar dados da cidade.');
                     }
 
+                    const tempMin = Math.round(data.main.temp_min);
+                    const tempMax = Math.round(data.main.temp_max);
+                    const hasEqualRange = tempMin === tempMax;
+
                     els.cityName.textContent = data.localizacao?.nome_completo || `${data.name}, ${data.sys.country}`;
                     els.coordinates.textContent = `Lat: ${data.coord.lat.toFixed(2)} | Lon: ${data.coord.lon.toFixed(2)}`;
                     els.temperature.textContent = `${Math.round(data.main.temp)}°C`;
                     els.description.textContent = data.weather[0].description;
-                    els.feelsLike.textContent = Math.round(data.main.feels_like);
-                    els.tempMin.textContent = Math.round(data.main.temp_min);
-                    els.tempMax.textContent = Math.round(data.main.temp_max);
-                    els.icon.src = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
-                    els.icon.style.display = 'block';
+                    els.feelsLike.textContent = `${Math.round(data.main.feels_like)}°C`;
+                    els.tempRangeLabel.textContent = hasEqualRange ? 'Temperatura' : 'Min / Máx';
+                    els.tempRange.textContent = hasEqualRange ? `${tempMin}°C` : `${tempMin}°C / ${tempMax}°C`;
+                    renderWeatherVisual(data.weather[0], isNightWeather(data));
                     els.humidity.textContent = `${data.main.humidity}%`;
                     els.pressure.textContent = `${data.main.pressure} hPa`;
                     els.windSpeed.textContent = `${Math.round(data.wind.speed * 3.6)} km/h`;
